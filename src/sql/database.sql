@@ -1,0 +1,13 @@
+CREATE DATABASE ernestina;
+
+CREATE TABLE categories(
+    id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    category TEXT NOT NULL
+);
+
+USE DATABASE ernestina;
+DESCRIBE categories;
+
+CREATE TABLE products(
+    id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY
+);
