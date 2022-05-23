@@ -4,8 +4,15 @@ import { Product } from "../interfaces";
 
 export async function getProducts(req: Request, res: Response): Promise<Response> {
     const connection = await connect();
-    const categories = await connection.query("SELECT * FROM products");
-    return res.json(categories[0]);
+    const products = await connection.query("SELECT * FROM products");
+    return res.json(products[0]);
+}
+
+export async function getProduct(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const connection = await connect();
+    const product = await connection.query("SELECT * FROM products WHERE id = ?", Number(id));
+    return res.json(product);
 }
 
 export async function createProduct(req: Request, res: Response): Promise<Response> {
