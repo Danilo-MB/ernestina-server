@@ -36,3 +36,40 @@ export async function createProduct(req: Request, res: Response): Promise<Respon
     }
 }
 
+export async function updateProduct(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const connection = await connect();
+    try {
+        const product = {
+            product_category: req.body.category,
+            product_title: req.body.title,
+            product_description: req.body.description,
+            product_imageUrl: req.body.imageUrl
+        };
+        await connection.query('UPDATE products set ? WHERE id=?', [product, id])
+        return res.json({
+            message: "Producto actualizado"
+        });
+    }
+    catch (e) {
+        console.log(e, "error");
+        res.statusCode = 500;
+        return res.json(e);
+    }
+}
+
+export async function deleteProduct(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const connection = await connect();
+    try {
+        await connection.query('DELETE FROM products WHERE id=?', Number(id))
+        return res.json({
+            message: "Producto eliminado"
+        });
+    }
+    catch (e) {
+        console.log(e, "error");
+        res.statusCode = 500;
+        return res.json(e);
+    }
+}
